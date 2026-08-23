@@ -642,7 +642,13 @@ main section[id] {
   object-fit: contain;
   padding: 4px;
 }
-.education-head h3 { font-size: 1.05rem; margin: 0 0 0.15rem; }
+.education-head h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
 .education-location {
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -1947,6 +1953,14 @@ main section[id] {
 }
 
 @media (max-width: 760px) {
+  /* background-attachment: fixed is unreliable on mobile browsers (especially
+     iOS Safari) and can make the whole background fail to paint — fall back
+     to normal scrolling backgrounds below this breakpoint. */
+  .hero-bg--parallax,
+  .about-hero-bg--parallax {
+    background-attachment: scroll;
+  }
+
   .nav-toggle { display: flex; }
 
   .primary-nav {
