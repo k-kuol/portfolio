@@ -18,25 +18,53 @@
     });
   }
 
-  /* ---------- reveal targets: faded in by revealPanel() on each panel show ---------- */
+  /* ---------- reveal targets: animate in as they scroll into view ----------
+     Wide single-column rows (timeline entries, program entries) slide in
+     from the left; grid-style cards rise up from below. */
   document
-    .querySelectorAll('.work-card, .service-card, .program-entry, .timeline-entry, .about-grid > *, .approach-card, .method-card, .profile-card, .skill-card, .education-card, .contact-row')
+    .querySelectorAll('.program-entry, .timeline-entry')
+    .forEach((el) => el.classList.add('reveal', 'reveal--left'));
+  document
+    .querySelectorAll('.work-card, .service-card, .about-grid > *, .approach-card, .method-card, .profile-card, .skill-card, .education-card, .contact-row')
     .forEach((el) => el.classList.add('reveal'));
+  // Section headings and intros animate in first, ahead of their content,
+  // so every subsection (How I Work, Services, Skills, ...) visibly
+  // scrolls into place as you reach it, not just the cards inside it.
+  document
+    .querySelectorAll('section > .wrap > h2, .section-intro, .education-grid, .contact-layout, .filters')
+    .forEach((el) => el.classList.add('reveal'));
+
+  const revealTargets = Array.from(document.querySelectorAll('.reveal'));
+  const revealReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealElement = (el) => el.classList.add('is-visible');
+
+  if (revealReduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(revealElement);
+  } else {
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        revealElement(entry.target);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
+    revealTargets.forEach((el) => revealObserver.observe(el));
+
+    // Safety net: guarantee nothing stays permanently invisible if the
+    // observer misses an element for any reason (layout timing, etc.).
+    // Long delay so it never preempts the normal scroll-triggered
+    // animation for content further down the page.
+    window.setTimeout(() => {
+      revealTargets.forEach((el) => {
+        if (!el.classList.contains('is-visible')) revealElement(el);
+      });
+    }, 9000);
+  }
 
   /* ---------- panel navigation (no scrolling between sections) ---------- */
   const panels = Array.from(document.querySelectorAll('.panel'));
   const panelMap = new Map(panels.map((p) => [p.dataset.panel, p]));
   const navLinks = document.querySelectorAll('.nav-link, [data-panel-link]');
-
-  const revealPanel = (panel) => {
-    const targets = panel.querySelectorAll('.reveal');
-    targets.forEach((el) => el.classList.remove('is-visible'));
-    // Force reflow so the removed class registers before re-adding it.
-    void panel.offsetWidth;
-    requestAnimationFrame(() => {
-      targets.forEach((el) => el.classList.add('is-visible'));
-    });
-  };
 
   /* ---------- stat numbers: count up on a loop while the home panel is visible ---------- */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -94,7 +122,6 @@
     if (!target) return;
     panels.forEach((p) => { p.hidden = p !== target; });
     setActiveNav(target.dataset.panel);
-    revealPanel(target);
     if (target.dataset.panel === 'home') {
       animateStatNumbers();
       startStatLoop();
