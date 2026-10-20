@@ -145,6 +145,46 @@
     }, { threshold: 0.5 }).observe(firstStat);
   }
 
+  /* ---------- skill cards: rotate positions every 5 seconds ----------
+     The first card moves to the end; every card glides from its old spot
+     to its new one (FLIP). Runs only while the deck is on screen and pauses
+     while a card is hovered or focused. */
+  const deck = document.querySelector('.skill-cards');
+  if (deck && deck.children.length > 1 && !reduceMotion && canObserve) {
+    let deckTimer = null;
+    let deckHeld = false;
+
+    const rotateDeck = () => {
+      if (deckHeld) return;
+      const cards = Array.from(deck.children);
+      const before = new Map(cards.map((c) => [c, c.getBoundingClientRect()]));
+      deck.appendChild(cards[0]);
+      cards.forEach((card) => {
+        const a = before.get(card);
+        const b = card.getBoundingClientRect();
+        const dx = a.left - b.left;
+        const dy = a.top - b.top;
+        if (!dx && !dy) return;
+        card.animate(
+          [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+          { duration: 800, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
+      });
+    };
+
+    const startDeck = () => { if (!deckTimer) deckTimer = setInterval(rotateDeck, 5000); };
+    const stopDeck = () => { clearInterval(deckTimer); deckTimer = null; };
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => (entry.isIntersecting ? startDeck() : stopDeck()));
+    }, { threshold: 0.3 }).observe(deck);
+
+    deck.addEventListener('mouseenter', () => { deckHeld = true; });
+    deck.addEventListener('mouseleave', () => { deckHeld = false; });
+    deck.addEventListener('focusin', () => { deckHeld = true; });
+    deck.addEventListener('focusout', () => { deckHeld = false; });
+  }
+
   /* ---------- portfolio filtering ---------- */
   const filterButtons = document.querySelectorAll('.filter-btn');
   const emptyState = document.getElementById('workEmpty');
@@ -182,7 +222,7 @@
   } else if (openCv) {
     // very old browsers: fall back to the PDF
     openCv.addEventListener('click', () => {
-      window.location.href = 'assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=4';
+      window.location.href = 'assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=6';
     });
   }
 
