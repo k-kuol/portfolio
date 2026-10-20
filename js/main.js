@@ -185,6 +185,26 @@
     deck.addEventListener('focusout', () => { deckHeld = false; });
   }
 
+  /* ---------- little joys: click a photo stack to show the next one ---------- */
+  document.querySelectorAll('.joy-slides').forEach((stack) => {
+    const slides = Array.from(stack.querySelectorAll('.joy-slide'));
+    const count = stack.querySelector('.joy-count');
+    let current = Math.max(0, slides.findIndex((s) => s.classList.contains('is-active')));
+    const show = (i) => {
+      slides[current].classList.remove('is-active');
+      current = i;
+      slides[current].classList.add('is-active');
+      if (count) count.textContent = `${current + 1}/${slides.length}`;
+    };
+    if (slides.length < 2) {
+      const hint = stack.querySelector('.joy-hint');
+      if (hint) hint.hidden = true;
+      return;
+    }
+    show(current);
+    stack.addEventListener('click', () => show((current + 1) % slides.length));
+  });
+
   /* ---------- portfolio filtering ---------- */
   const filterButtons = document.querySelectorAll('.filter-btn');
   const emptyState = document.getElementById('workEmpty');

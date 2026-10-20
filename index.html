@@ -214,14 +214,48 @@
       </header>
 
       <div class="joy-board">
-        <figure class="joy-card">
-          <img class="joy-photo" src="assets/photos/joy-cows.jpg" alt="Kuol waving beside his long-horned cow" style="object-position: center 31%;">
+        <!-- Cards with several photos: a .joy-slides button holding
+             <img class="joy-photo joy-slide"> items (first one gets is-active).
+             Add or remove slides freely; the counter updates itself. -->
+        <figure class="joy-card joy-card--slides">
+          <button class="joy-slides" type="button" aria-label="Show next bowling photo">
+            <img class="joy-photo joy-slide is-active" src="assets/photos/joy-bowling-3.jpg" alt="Kuol releasing an orange bowling ball down the lane" style="object-position: center 75%;">
+            <img class="joy-photo joy-slide" src="assets/photos/joy-bowling-1.jpg" alt="Kuol walking back from the lane at a neon-lit bowling alley" style="object-position: center 12%;" loading="lazy">
+            <img class="joy-photo joy-slide" src="assets/photos/joy-bowling-2.jpg" alt="Kuol walking down a neon-lit bowling lane in a plaid shirt and bucket hat" style="object-position: center 18%;" loading="lazy">
+            <span class="joy-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 4v9.5M9 4a1.5 1.5 0 0 1 3 0v6l4.5.8a2 2 0 0 1 1.6 2.2l-.6 4.5a3 3 0 0 1-3 2.5H11a3 3 0 0 1-2.4-1.2L5.5 14.6a1.5 1.5 0 0 1 2.3-1.9L9 13.5"/></svg>
+              Click for next <b class="joy-count">1/3</b>
+            </span>
+          </button>
+          <figcaption>Bowling. Chasing the perfect strike.</figcaption>
+        </figure>
+
+        <figure class="joy-card joy-card--slides">
+          <button class="joy-slides" type="button" aria-label="Show next cow photo">
+            <img class="joy-photo joy-slide is-active" src="assets/photos/joy-cows-2.jpg" alt="A pale long-horned bull standing in the cattle camp at dawn" style="object-position: center 15%;">
+            <img class="joy-photo joy-slide" src="assets/photos/joy-cows.jpg" alt="Kuol waving beside his long-horned cow" style="object-position: center 31%;" loading="lazy">
+            <span class="joy-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 4v9.5M9 4a1.5 1.5 0 0 1 3 0v6l4.5.8a2 2 0 0 1 1.6 2.2l-.6 4.5a3 3 0 0 1-3 2.5H11a3 3 0 0 1-2.4-1.2L5.5 14.6a1.5 1.5 0 0 1 2.3-1.9L9 13.5"/></svg>
+              Click for next <b class="joy-count">1/2</b>
+            </span>
+          </button>
           <figcaption>My cows. Time with them is where I slow down.</figcaption>
+        </figure>
+
+        <figure class="joy-card">
+          <img class="joy-photo" src="assets/photos/joy-pool.jpg" alt="A pool table under a hanging lamp in a neon-lit games room">
+
+          <figcaption>Pool. Angles, focus, and a bit of trash talk.</figcaption>
         </figure>
 
         <figure class="joy-card">
           <img class="joy-photo" src="assets/photos/joy-fishing.jpg" alt="Kuol standing in a wooden canoe on the river, reflected in the water" style="object-position: center 58%;">
           <figcaption>Fishing. Patience, water, and the occasional win.</figcaption>
+        </figure>
+
+        <figure class="joy-card">
+          <img class="joy-photo" src="assets/photos/joy-travel.jpg" alt="Kuol in a bucket hat at a bus station, ready for the road" style="object-position: center 25%;">
+          <figcaption>Traveling. New places, new people, new stories.</figcaption>
         </figure>
 
         <figure class="joy-card">

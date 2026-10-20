@@ -927,6 +927,84 @@ summary:focus-visible {
     var(--bg-dark);
 }
 .joy-emoji { font-size: 3rem; line-height: 1; }
+.joy-ph-icon {
+  width: 46px;
+  height: 46px;
+  fill: none;
+  stroke: var(--orange-soft);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--orange-soft);
+}
+
+/* bowling: a stack of photos, click to flip to the next */
+.joy-card--slides {
+  /* two more prints peeking out behind, so it reads as a stack */
+  box-shadow:
+    7px 7px 0 -1px #fff, 7px 7px 0 0 rgba(26, 15, 10, 0.08),
+    14px 14px 0 -2px #fbf3ea, 14px 14px 0 -1px rgba(26, 15, 10, 0.08),
+    0 18px 40px rgba(26, 15, 10, 0.16);
+}
+.joy-slides {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 0;
+  background: var(--bg-dark);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  font: inherit;
+}
+.joy-slides:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.joy-slide {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.5s ease, transform 0.6s var(--ease);
+}
+.joy-slide.is-active { opacity: 1; transform: none; }
+.joy-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.8rem;
+  border-radius: var(--radius-pill);
+  background: rgba(26, 15, 10, 0.78);
+  border: 1px solid rgba(242, 166, 90, 0.45);
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
+}
+.joy-hint svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: var(--orange-soft);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: joy-tap 1.6s ease-in-out infinite;
+}
+.joy-count { color: var(--orange-soft); font-weight: 700; }
+.joy-slides:hover .joy-hint { background: var(--orange); }
+.joy-slides:hover .joy-hint svg, .joy-slides:hover .joy-count { stroke: #fff; color: #fff; }
+@keyframes joy-tap {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
 
 .joy-card figcaption {
   font-family: 'Caveat', cursive;
