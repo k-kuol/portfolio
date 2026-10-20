@@ -1088,6 +1088,9 @@ summary:focus-visible {
 }
 .work-media--logo { background: #1d4515; }
 .work-media--logo img { object-position: center; }
+/* wide screenshots shown whole; the frame matches the screenshot's dark background */
+.work-media--fit { background: #1a0f0a; }
+.work-media--fit img { object-fit: contain; object-position: center; }
 .work-card:hover .work-media img { transform: scale(1.04); }
 
 .work-body {
