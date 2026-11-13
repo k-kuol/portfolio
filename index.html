@@ -3,15 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kuol Akech Riak Kuol · Full-Stack Developer &amp; Digital Communications Specialist</title>
-<meta name="description" content="Kuol Akech Riak Kuol is a Full-Stack Developer &amp; Digital Communications Specialist building software and leading communications, usually on the same project.">
+<title>Kuol Akech Riak Kuol · Junior Software Engineer · Frontend &amp; Backend Developer · Graphic Designer · Digital Communications Specialist</title>
+<meta name="description" content="Kuol Akech Riak Kuol is a Junior Software Engineer (Frontend &amp; Backend Developer), Graphic Designer &amp; Digital Communications Specialist who builds software, designs visuals and leads communications, usually on the same project.">
 <meta name="theme-color" content="#1a0f0a">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css?v=50">
+<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/motion.css?v=4">
+<script>
+  /* Decide before first paint whether to play the intro: once per session, never with reduced motion. */
+  (function () {
+    var root = document.documentElement;
+    root.classList.add('js');
+    var seen = false;
+    try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!seen && !reduce) {
+      root.classList.add('is-intro');
+      /* safety net: never leave the page covered if a script fails to load */
+      setTimeout(function () { root.classList.remove('is-intro'); }, 6000);
+    }
+  })();
+</script>
 <noscript><style>
   .reveal { opacity: 1 !important; transform: none !important; }
 </style></noscript>
@@ -20,6 +36,28 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- INTRO / PRELOADER -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <p class="intro-name">
+      <span class="intro-line"><span>Kuol</span></span>
+      <span class="intro-line"><span class="gradient-text">Akech.</span></span>
+    </p>
+    <p class="intro-tag"><span>Engineer</span><i></i><span>Designer</span><i></i><span>Communicator</span></p>
+  </div>
+  <div class="intro-foot">
+    <span class="intro-bar"><span id="introBar"></span></span>
+    <span class="intro-count" id="introCount">0</span>
+  </div>
+</div>
+
+<!-- PAGE TRANSITION CURTAIN -->
+<div class="curtain" id="curtain" aria-hidden="true"><span class="curtain-label" id="curtainLabel"></span></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <!-- FLOATING NAV -->
 <header class="nav-shell">
@@ -39,6 +77,7 @@
       <a href="#contact" class="nav-link nav-link--mobile-only">Contact</a>
     </div>
 
+
     <a href="#contact" class="btn btn-primary btn-sm nav-cta">Let's Talk</a>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle menu">
@@ -52,18 +91,20 @@
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid-lines" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
       <div class="hero-text">
-        <p class="status-pill"><span class="status-dot"></span> Open to new work</p>
-        <h1>Kuol<br><span class="gradient-text">Akech.</span></h1>
-        <p class="hero-subtitle">Full-Stack Developer &amp; Digital Communications Specialist</p>
+        <p class="status-pill"><span class="status-dot"></span> <span>Open to new work</span></p>
+        <h1><span class="h1-line"><span>Kuol</span></span><span class="h1-line"><span class="gradient-text">Akech.</span></span></h1>
+        <p class="hero-subtitle">
+          <span class="sr-only">Junior Software Engineer, Frontend Developer, Backend Developer, Graphic Designer &amp; Digital Communications Specialist</span>
+          <span class="roles" aria-hidden="true"><span class="roles-prefix">I'm a</span> <span class="roles-word" id="rolesWord">Junior Software Engineer</span><span class="roles-caret"></span></span>
+        </p>
         <p class="hero-quote">“I build the software, write the words, and design the visuals, usually on the same project.”</p>
 
         <div class="hero-actions">
-          <a href="#work" class="btn btn-primary">View Work <span aria-hidden="true">→</span></a>
-          <a href="assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=7" class="btn btn-ghost" download="Kuol_Akech_Riak_Kuol_CV.pdf">↓ Download CV</a>
+          <a href="#work" class="btn btn-primary" data-magnetic><span>View Work</span> <span aria-hidden="true">→</span></a>
+          <a href="assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=7" class="btn btn-ghost" download="Kuol_Akech_Riak_Kuol_CV.pdf" data-magnetic>↓ <span>Download CV</span></a>
         </div>
 
         <div class="hero-socials">
@@ -103,18 +144,6 @@
         </div>      </div>
     </div>
 
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker-track" data-marquee>
-        <span>Full-Stack Developering</span><i class="tick-dot"></i>
-        <span>Backend &amp; APIs</span><i class="tick-dot"></i>
-        <span>Graphic Design</span><i class="tick-dot"></i>
-        <span>Brand Identity</span><i class="tick-dot"></i>
-        <span>Social Media</span><i class="tick-dot"></i>
-        <span>Communications Strategy</span><i class="tick-dot"></i>
-        <span>Writing</span><i class="tick-dot"></i>
-        <span>Mentorship</span><i class="tick-dot"></i>
-      </div>
-    </div>
   </section>
 
   <!-- ABOUT · BENTO -->
@@ -129,14 +158,10 @@
         <article class="tile tile--bio">
           <span class="tile-label">Hello, I'm Kuol</span>
           <p class="tile-lead">Building software, designing visuals, and writing the words that resonate.</p>
-          <p>I'm Kuol Akech Riak, a Full-Stack Developer and Digital Communications Specialist based in Kigali, Rwanda. I design and build full-stack web applications, from the database and backend to the interface, thinking through how they're structured before I ever touch the interface, then shipping products people actually enjoy using, and I pair that work with the visuals and content that make it land: sharp graphic design, brand systems, and writing that sounds like a person, not a template. Working across South Sudan, Rwanda, and beyond, I help individuals, nonprofits, and growing organizations turn scattered ideas into tools their audiences can actually use, and turn quiet work into stories people remember. I'm currently studying Software Engineering at the African Leadership University (ALU), building the same range of skills into everything I take on next.</p>
+          <p>I'm Kuol Akech Riak, a Junior Software Engineer (Frontend and Backend Developer), Graphic Designer and Digital Communications Specialist based in Kigali, Rwanda. I design and build full-stack web applications, from the database and backend to the interface, thinking through how they're structured before I ever touch the interface, then shipping products people actually enjoy using, and I pair that work with the visuals and content that make it land: sharp graphic design, brand systems, and writing that sounds like a person, not a template. Working across South Sudan, Rwanda, and beyond, I help individuals, nonprofits, and growing organizations turn scattered ideas into tools their audiences can actually use, and turn quiet work into stories people remember. I'm currently studying Software Engineering at the African Leadership University (ALU), building the same range of skills into everything I take on next.</p>
         </article>
 
         <figure class="tile tile--photo">
-          <!-- static viewfinder frame: corner brackets and two small labels -->
-          <span class="vf" aria-hidden="true"></span>
-          <span class="vf-label vf-label--top" aria-hidden="true"><i></i>Kuol Akech</span>
-          <span class="vf-label vf-label--bottom" aria-hidden="true">Code · Design · Words</span>
           <img decoding="async" loading="lazy" src="assets/photos/kuol-headshot.jpg" alt="Kuol Akech Riak Kuol">
         </figure>
 
@@ -152,7 +177,7 @@
 
         <article class="tile tile--story">
           <span class="tile-label">Why I build</span>
-          <p>I build things because building is how I make sense of chaos. Somewhere between writing code, sketching a brand, and putting down lines that started as a diary entry, I stopped treating developer, designer, and writer as separate people, they're just different tools for the same instinct: turn a mess into something that works. I was nine when I left home during the war in South Sudan, and I've been figuring things out without a manual ever since. These days that's software, mentoring, and stories, often the same week. I'm not the fastest at any one, just the one who won't stop until it's done well.</p>
+          <p>I build things because building is how I make sense of chaos. Somewhere between writing code, sketching a brand, and putting down lines that started as a diary entry, I stopped treating engineer, designer, and writer as separate people, they're just different tools for the same instinct: turn a mess into something that works. I was nine when I left home during the war in South Sudan, and I've been figuring things out without a manual ever since. These days that's software, mentoring, and stories, often the same week. I'm not the fastest at any one, just the one who won't stop until it's done well.</p>
         </article>
 
         <blockquote class="tile tile--quote">
@@ -190,7 +215,7 @@
           </div>
           <div class="fact">
             <span class="tile-label">Focus</span>
-            <p>Full-Stack · Digital Comms</p>
+            <p>Frontend · Backend · Design · Digital Comms</p>
           </div>
         </div>
       </div>
@@ -272,7 +297,7 @@
       <header class="section-head section-head--center">
         <span class="eyebrow">Skills &amp; Expertise</span>
         <h2>Frontend, backend, and words, <span class="gradient-text">in one toolkit.</span></h2>
-        <p class="section-sub">Full-stack development paired with the design and communication that make products land.</p>
+        <p class="section-sub">Software engineering paired with the design and communication that make products land.</p>
       </header>
     </div>
 
@@ -455,7 +480,7 @@
         <aside class="xp-intro">
           <span class="eyebrow">Experience</span>
           <h2>Where I've <span class="gradient-text">worked.</span></h2>
-          <p>I build the software, design the visuals, and write the words, usually on the same project. My work spans full-stack and backend development, brand design, and communications across Africa.</p>
+          <p>I build the software, design the visuals, and write the words, usually on the same project. My work spans software engineering (frontend and backend development), graphic design, and digital communications across Africa.</p>
 
           <div class="xp-photo">
             <img decoding="async" loading="lazy" src="assets/photos/kuol-working.jpg" alt="Kuol Akech Riak Kuol at work">
@@ -463,7 +488,7 @@
 
           <p class="mini-label">Open to</p>
           <ul class="tag-row">
-            <li class="tag">Full-stack &amp; backend developer roles</li>
+            <li class="tag">Frontend &amp; backend developer roles</li>
             <li class="tag">Graphic design &amp; brand projects</li>
             <li class="tag">Social media &amp; communications work</li>
           </ul>
@@ -598,14 +623,14 @@
           <span class="eyebrow">Services &amp; How I Work</span>
           <h2>What I can <span class="gradient-text">do for you.</span></h2>
         </div>
-        <a href="#contact" class="btn btn-primary">Start a project →</a>
+        <a href="#contact" class="btn btn-primary" data-magnetic>Start a project →</a>
       </header>
 
       <div class="service-list">
         <article class="service-row">
           <span class="service-no">01</span>
           <div class="service-main">
-            <h3>Full-Stack &amp; Backend Development</h3>
+            <h3>Software Engineering (Frontend &amp; Backend)</h3>
             <p>I design the database first, then build outward: plain HTML, CSS, and JS when that's enough, React and Python/Django when it's not. I'd rather ship something that works than wait on the perfect stack.</p>
             <ul class="tag-row">
               <li class="tag tag--dark">Backends &amp; APIs (Python / Django)</li>
@@ -695,9 +720,13 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-mark" aria-hidden="true">Kuol Akech</p>
+    <div class="ending">
+      <p class="ending-kicker">Thanks for scrolling all the way down.</p>
+      <a href="#contact" class="ending-cta" data-magnetic data-cursor="Say hi">Let's make the next thing together ↗</a>
+    </div>
+    <p class="footer-mark" aria-hidden="true" id="footerMark">Kuol Akech</p>
     <div class="footer-bottom">
-      <p>© 2026 Kuol Akech Riak Kuol · All Rights Reserved</p>
+      <p>© 2026 Kuol Akech Riak Kuol · <span>All Rights Reserved</span></p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="#about">About</a>
         <a href="#work">Work</a>
@@ -714,7 +743,7 @@
   <div class="cv-head">
     <div>
       <h2 id="cvTitle">Kuol Akech Riak Kuol</h2>
-      <p class="cv-role">Full-Stack Developer &amp; Digital Communications Specialist</p>
+      <p class="cv-role">Junior Software Engineer · Frontend &amp; Backend Developer · Graphic Designer · Digital Communications Specialist</p>
       <p class="cv-contact">Kigali, Rwanda · k.kuol@alustudent.com · <a href="https://www.linkedin.com/in/kuol-akech/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/k-kuol" target="_blank" rel="noopener">GitHub</a></p>
     </div>
     <div class="cv-actions">
@@ -726,7 +755,7 @@
   <div class="cv-body">
     <section class="cv-section">
       <h4>Summary</h4>
-      <p>Full-Stack Developer and Digital Communications Specialist who ships full products, not just code – designing databases and backends, building interfaces, and pairing them with the brand systems and writing that make people trust what they're using. Proven across six African countries: platforms that manage real land and identity data, communications strategy for a multi-country organization, and mentorship programs that turn frameworks into results. Currently completing a Software Engineering degree at the African Leadership University while actively delivering for clients and communities across the continent.</p>
+      <p>Junior Software Engineer (Frontend and Backend Developer), Graphic Designer and Digital Communications Specialist who ships full products, not just code – designing databases and backends, building interfaces, and pairing them with the brand systems and writing that make people trust what they're using. Proven across six African countries: platforms that manage real land and identity data, communications strategy for a multi-country organization, and mentorship programs that turn frameworks into results. Currently completing a Software Engineering degree at the African Leadership University while actively delivering for clients and communities across the continent.</p>
     </section>
 
     <section class="cv-section">
@@ -821,6 +850,10 @@
   </div>
 </dialog>
 
-<script src="js/main.js?v=7"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="js/main.js?v=9" defer></script>
+<script src="js/motion.js?v=8" defer></script>
 </body>
 </html>

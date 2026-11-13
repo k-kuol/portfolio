@@ -107,43 +107,40 @@
     window.setTimeout(() => revealTargets.forEach(revealElement), 9000);
   }
 
-  /* ---------- stat numbers: count up when the bento scrolls into view ---------- */
-  const animateStatNumbers = () => {
-    document.querySelectorAll('.stat-number').forEach((el) => {
-      if (!el.dataset.target) {
-        const match = el.textContent.trim().match(/^(\d+)(\D*)$/);
-        if (!match) return;
-        el.dataset.target = match[1];
-        el.dataset.suffix = match[2] || '';
-      }
-      const target = parseInt(el.dataset.target, 10);
-      const suffix = el.dataset.suffix;
-      if (reduceMotion) {
-        el.textContent = `${target}${suffix}`;
-        return;
-      }
-      const duration = 1400;
-      const start = performance.now();
-      const step = (now) => {
-        // rAF timestamps can predate `start`, so clamp at 0 to avoid negative counts
-        const p = Math.min(Math.max((now - start) / duration, 0), 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = `${Math.round(eased * target)}${suffix}`;
-        if (p < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    });
-  };
+  /* ---------- stat numbers: count up from 0 each time a stat scrolls into view ---------- */
+  document.querySelectorAll('.stat-number').forEach((el) => {
+    const match = el.textContent.trim().match(/^(\d+)(\D*)$/);
+    if (!match) return;
+    const target = parseInt(match[1], 10);
+    const suffix = match[2] || '';
+    const label = `${target}${suffix}`;
+    el.setAttribute('aria-label', label);
+    if (reduceMotion || !canObserve) return;
 
-  const firstStat = document.querySelector('.tile--stat');
-  if (firstStat && canObserve) {
-    new IntersectionObserver((entries, obs) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        animateStatNumbers();
-        obs.disconnect();
-      }
-    }, { threshold: 0.5 }).observe(firstStat);
-  }
+    let frame = 0;
+    const setValue = (n) => { el.textContent = `${n}${suffix}`; };
+    const count = () => {
+      cancelAnimationFrame(frame);
+      const duration = 1800;
+      let start = null;
+      const step = (now) => {
+        if (start === null) start = now;
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setValue(Math.round(eased * target));
+        if (p < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    setValue(0);
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) count();
+        else if (entry.boundingClientRect.top > 0) { cancelAnimationFrame(frame); setValue(0); }
+      });
+    }, { threshold: 0.6 }).observe(el);
+  });
 
   /* ---------- little joys: click a photo stack to show the next one ---------- */
   document.querySelectorAll('.joy-slides').forEach((stack) => {

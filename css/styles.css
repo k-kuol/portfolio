@@ -418,7 +418,6 @@ summary:focus-visible {
   top: -320px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(210, 87, 30, 0.55) 0%, rgba(210, 87, 30, 0.12) 40%, transparent 70%);
-  filter: blur(20px);
   animation: glow-drift 14s ease-in-out infinite alternate;
 }
 .hero-glow::after {
@@ -435,18 +434,6 @@ summary:focus-visible {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(-80px, 60px) scale(1.08); }
 }
-.hero-grid-lines {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
-}
-
 .hero-inner {
   width: 100%;
   display: grid;
@@ -610,38 +597,6 @@ summary:focus-visible {
   background: rgba(255, 255, 255, 0.18);
 }
 
-/* ticker band */
-.ticker {
-  position: relative;
-  background: var(--gradient-banner);
-  transform: rotate(-2deg) scale(1.04);
-  margin-bottom: 2.5rem;
-  padding-block: 1rem;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-}
-.ticker-track {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-  width: max-content;
-  animation: marquee 32s linear infinite;
-}
-.ticker-track span {
-  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: #fff;
-  white-space: nowrap;
-}
-/* small ring separator between ticker words */
-.ticker-track .tick-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 3px solid var(--bg-dark);
-  flex-shrink: 0;
-}
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -656,7 +611,8 @@ summary:focus-visible {
   /* the headshot takes one column, the same size as the stat tiles */
   grid-template-areas:
     "bio   bio   bio   photo"
-    "story story stat1 stat2"
+    "story story story stat1"
+    "story story story stat2"
     "edu   edu   facts facts"
     "quote quote quote quote";
   gap: 1.25rem;
@@ -720,50 +676,9 @@ summary:focus-visible {
   width: 100%;
   height: auto;
   border-radius: calc(var(--radius-lg) - 10px);
-  box-shadow: 0 0 0 4px rgba(242, 166, 90, 0.18), 0 18px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* static viewfinder: orange corner brackets around the tile edge */
-.vf {
-  position: absolute;
-  inset: 14px;
-  pointer-events: none;
-  --c: var(--orange);
-  --l: 26px;
-  --w: 2px;
-  background:
-    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--w),
-    linear-gradient(var(--c), var(--c)) top left / var(--w) var(--l),
-    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--w),
-    linear-gradient(var(--c), var(--c)) top right / var(--w) var(--l),
-    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--w),
-    linear-gradient(var(--c), var(--c)) bottom left / var(--w) var(--l),
-    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--w),
-    linear-gradient(var(--c), var(--c)) bottom right / var(--w) var(--l);
-  background-repeat: no-repeat;
-}
-.vf-label {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  white-space: nowrap;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-on-dark-muted);
-}
-.vf-label--top { top: 26px; }
-.vf-label--bottom { bottom: 26px; color: var(--orange-soft); }
-.vf-label i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--orange);
-}
 
 .tile--stat {
   display: flex;
@@ -775,7 +690,7 @@ summary:focus-visible {
 .tile--stat:not(.tile--stat-dark) { grid-area: stat1; }
 .tile--stat-dark { grid-area: stat2; background: var(--bg-dark); }
 .stat-number {
-  font-size: clamp(3.2rem, 6vw, 4.75rem);
+  font-size: clamp(4.5rem, 8vw, 6.75rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -789,7 +704,7 @@ summary:focus-visible {
 }
 .stat-label {
   margin-top: 0.5rem !important;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
 }
@@ -1252,8 +1167,7 @@ summary:focus-visible {
   gap: 1.75rem;
 }
 .work-card {
-  position: sticky;
-  top: calc(100px + var(--i, 0) * 18px);
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   min-height: 440px;
@@ -1812,7 +1726,7 @@ summary:focus-visible {
 .reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track, .marquee-track, .hero-glow { animation: none !important; }
+  .marquee-track, .hero-glow { animation: none !important; }
 }
 
 /* ============================================
@@ -1893,13 +1807,8 @@ summary:focus-visible {
       "facts facts";
   }
   .tile--stat { padding: 1.25rem; }
-  .vf { --l: 18px; inset: 10px; }
-  .vf-label { font-size: 0.55rem; letter-spacing: 0.08em; }
-  .vf-label--top { top: 18px; }
-  .vf-label--bottom { bottom: 18px; }
   .tile--facts { grid-template-columns: 1fr; }
 
-  .work-card { position: relative; top: auto; }
 
   .xp-item summary { grid-template-columns: 44px 1fr 36px; gap: 0.8rem; padding: 1rem; }
   .xp-logo { width: 44px; height: 44px; border-radius: 12px; }
