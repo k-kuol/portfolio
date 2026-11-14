@@ -75,7 +75,6 @@ html.is-intro .intro {
 
 /* hold the hero entrance until the intro lifts */
 html.is-intro .hero-text > *,
-html.is-intro .hero-photo,
 html.is-intro .h1-line > span { animation-play-state: paused; }
 
 /* ---------- hero headline lines + typed roles ---------- */

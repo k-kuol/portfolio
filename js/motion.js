@@ -90,7 +90,7 @@
   const startRoles = () => {
     if (!rolesWord) return;
     window.clearTimeout(roleTimer);
-    const list = ['Junior Software Engineer', 'Frontend Developer', 'Backend Developer', 'Graphic Designer', 'Digital Communications Specialist'];
+    const list = ['Frontend Developer', 'Backend Developer', 'Graphic Designer', 'Digital Communications Specialist'];
     rolesWord.textContent = list[0];
     if (reduce || list.length < 2) return;
 
