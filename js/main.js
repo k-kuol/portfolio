@@ -199,7 +199,7 @@
   } else if (openCv) {
     // very old browsers: fall back to the PDF
     openCv.addEventListener('click', () => {
-      window.location.href = 'assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=7';
+      window.location.href = 'assets/cv/Kuol_Akech_Riak_Kuol_CV.pdf?v=14';
     });
   }
 

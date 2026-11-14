@@ -1316,6 +1316,18 @@ summary:focus-visible {
   line-height: 1.3;
 }
 .xp-title span { font-size: 0.9rem; font-weight: 500; color: var(--orange); }
+.xp-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; }
+/* small honest label: these roles were unpaid */
+.xp-vol {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(210, 87, 30, 0.35);
+  border-radius: var(--radius-pill);
+  padding: 0.22rem 0.6rem;
+}
 .xp-date {
   font-size: 0.78rem;
   font-weight: 500;
@@ -1660,6 +1672,7 @@ summary:focus-visible {
 .cv-role { font-weight: 600; margin: 0.2rem 0 0.35rem; }
 .cv-contact { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
 .cv-contact a { color: var(--text); }
+.cv-entry-role a { color: var(--orange); font-weight: 500; white-space: nowrap; }
 .cv-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 .cv-close {
   width: 40px;
@@ -1776,7 +1789,8 @@ summary:focus-visible {
   .nav-link--mobile-only { display: block; }
 
   .hero-inner { grid-template-columns: 1fr; }
-  .hero-visual { width: min(80%, 360px); margin-top: 1rem; }
+  /* phones & tablets: photo first, text underneath */
+  .hero-visual { order: -1; width: min(80%, 360px); margin-top: 0; }
 
   .work-card { grid-template-columns: 1fr; min-height: 0; }
   .work-media { aspect-ratio: 16 / 9; }
@@ -1811,11 +1825,11 @@ summary:focus-visible {
 
   .xp-item summary { grid-template-columns: 44px 1fr 36px; gap: 0.8rem; padding: 1rem; }
   .xp-logo { width: 44px; height: 44px; border-radius: 12px; }
-  .xp-date { grid-column: 2; grid-row: 2; justify-self: start; }
+  .xp-meta { grid-column: 2; grid-row: 2; justify-self: start; flex-direction: row; flex-wrap: wrap; align-items: center; }
   .xp-toggle { grid-column: 3; grid-row: 1; width: 36px; height: 36px; }
   .xp-body { padding: 0 1rem 1.25rem; }
 
-  .hero-visual { margin: 1.5rem 14px 14px 0; }
+  .hero-visual { margin: 0 14px 14px 0; }
   .hero-visual::before { inset: 14px -14px -14px 14px; }
   .photo-caption { left: 10px; right: 10px; bottom: 10px; gap: 0.5rem; padding: 0.55rem 0.6rem; }
   .cred { gap: 0.45rem; }
